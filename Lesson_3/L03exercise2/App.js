@@ -1,19 +1,54 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, Image, Button, Alert, ScrollView, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { images } from './img';  // Importing images from img.js
 
 const SongQuestion = ({ question, imageSource, options, onSelectAnswer }) => (
-    <View style={{ margin: 20 }}>
-        <Image source={imageSource} style={{ width: 200, height: 200 }} />
-        <Text>{question}</Text>
-        <Picker onValueChange={(value) => onSelectAnswer(value)} style={{ height: 50, width: 150 }}>
+    <View style={styles.questionContainer}>
+        <Image source={imageSource} style={styles.image} />
+        <Text style={styles.questionText}>{question}</Text>
+        <Picker
+            onValueChange={(value) => onSelectAnswer(value)}
+            style={styles.picker}
+        >
             {options.map((option, index) => (
                 <Picker.Item key={index} label={option} value={option} />
             ))}
         </Picker>
     </View>
 );
+
+const styles = StyleSheet.create({
+    questionContainer: {
+        marginVertical: 15,
+        padding: 20,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 5 },
+        shadowRadius: 10,
+        elevation: 3,
+        alignItems: 'center',
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderRadius: 8,
+        marginBottom: 10,
+    },
+    questionText: {
+        fontSize: 18,
+        fontWeight: '600',
+        textAlign: 'center',
+        color: '#333',
+        marginVertical: 10,
+    },
+    picker: {
+        height: 50,
+        width: 200,
+    },
+});
 
 export default function App() {
     const [answers, setAnswers] = useState({ question1: '', question2: '', question3: '' });
